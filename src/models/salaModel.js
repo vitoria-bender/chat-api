@@ -1,9 +1,7 @@
 
-async function listarSalas(){
-    return [
-        {nome:"vingadores do javascript", tipo: "publica"},
-        {nome:"node melhor que php", tipo: "publica"}
-    ];
-}
+const db = require ("./db");
 
-module.exports = {listarSalas};
+let listarSalas = async ()=>{
+    let salas = await db.findAll("salas");
+    return salas;
+};

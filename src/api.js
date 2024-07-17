@@ -15,11 +15,17 @@ app.use('/', router.get('/sobre', (req, res) =>{
         "versao": "1.0.0.0",
         "author": "Vitória Bender"
 
-    });s
-    const salaController = require('./controllers/salaController');
-    const resp = await salaController.get();
+    });
 
+}));
+
+app.use("/salas", async(req, res) =>{
+const salaController = require('./controllers/salaController');
+    const resp = await salaController.get();
     res.status(200).send(resp);
-}))
+});
+    
+
+    
 
 module.exports = app;
