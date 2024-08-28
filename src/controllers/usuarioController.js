@@ -1,4 +1,4 @@
-const token = require("../util/token");
+const token = require("../../util/token");
 const usuarioModel = require("../models/usuarioModel");
 
 exports.entrar = async(nick) =>{
