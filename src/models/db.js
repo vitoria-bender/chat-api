@@ -41,4 +41,3 @@ async function connect(){
     };
     
     module.exports = {findAll, insertOne, findOne, updateOne};
-    
