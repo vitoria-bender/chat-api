@@ -29,7 +29,7 @@ app.use("/entrar", router.post("/entrar", async(req, res) =>{
 app.use("/salas", router.get("/salas", async(req, res)=>{
     const token = require("../util/token");
     const salaController = require("../src/controllers/salaController");
-    const teste = await token.checkToken(req.headers.token, req.headers.iduser, req.headers.nick);
+    const teste = await token.checkToken(req.headers.token, req.headers.idUser, req.headers.nick);
     if(teste){
         let resp = await salaController.get();
         res.status(200).send(resp);

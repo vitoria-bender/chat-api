@@ -9,7 +9,7 @@ async function connect(){
     const client = new MongoClient(process.env.DB_HOST);
     await client.connect();
 
-    singleton = cliente.db(process.env.DB_DATABASE);
+    singleton = client.db(process.env.DB_DATABASE);
     return singleton;
 }
 

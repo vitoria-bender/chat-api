@@ -9,12 +9,12 @@ exports.enviarMensagem = async (nick, msg, idsala) => {
     const sala = await salaModel.buscarSala(idsala);
 
     if (!sala.msgs) {
-      sala.msgs=[];
+      sala.msg=[];
     }
 
     timestamp=Date.now();
 
-    sala.msgs.push(
+    sala.msg.push(
       {
         timestamp:timestamp,
         msg:msg,
