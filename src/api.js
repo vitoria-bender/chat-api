@@ -8,9 +8,9 @@ app.use(express.json());
 const router = express.Router();
 
 
-app.use('/', router.get('/', (req, res, next)=> {
+/*app.use('/', router.get('/', (req, res, next)=> {
     res.status(200).send("<h1>API - CHAT<h1>")
-}));
+}));*/
 
 app.use('/', router.get('/sobre', (req, res) =>{
     res.status(200).send({
@@ -27,7 +27,7 @@ app.use("/entrar", router.post("/entrar", async(req, res, next) =>{
 }));
 
 app.use("/salas", router.get("/salas", async(req, res, next)=>{
-    const token = require("./util/token");
+    const token = require("../../util/token");
     const salaController = require("./controllers/salaController");
     const teste = await token.checkToken(req.headers.token, req.headers.iduser, req.headers.nick);
     if(teste){
@@ -40,7 +40,7 @@ app.use("/salas", router.get("/salas", async(req, res, next)=>{
 }));
 
 app.use("/sala/entrar", router.post("/sala/entrar", async(req, res)=>{
-    const token = require("./util/token");
+    const token = require("../../util/token");
     const salaController = require("./controllers/salaController");
     if(token.checkToken(req.headers.token,req.headers.iduser,req.headers.nick)){
         let resp = await salaController.entrar(req.headers.iduser, req.query.idSala);
@@ -51,7 +51,7 @@ app.use("/sala/entrar", router.post("/sala/entrar", async(req, res)=>{
 }));
 
 app.use("/sala/listar", router.get("/sala/listar", async (req, res) => {
-    const token = require("./util/token");
+    const token = require("../../util/token");
     const salaController = require("./controllers/salaController");
     if(!token.checkToken(req.headers.token,req.headers.iduser,req.headers.nick)) return false;
     let resp= await salaController.buscarMensagens(req.query.idSala, req.query.timestamp);
