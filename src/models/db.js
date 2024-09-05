@@ -25,19 +25,25 @@ async function connect(){
     
     let findOne = async (collection, _id) => {
         const db = await connect();
-        let obj= await db.collection(collection).find({'_id':new ObjectId(_id)}).toArray();
+        let obj = await db.collection(collection).find({ '_id': new ObjectId(_id) }).toArray();
         
-        if(obj) {
+        if (obj.length) {
           return obj[0];
-        };
+        }
     
-        return false;
+        return null;
     };
-        
+
     let updateOne = async (collection, object, param) => {
         const db = await connect();
         let result = await db.collection(collection).updateOne(param, { $set: object} );
         return result;
     };
     
-    module.exports = {findAll, insertOne, findOne, updateOne};
+    let deleteOne = async (collection, param) => {
+        const db = await connect();
+        console.log(param)
+        return await db.collection(collection).deleteOne({ '_id': new ObjectId(param) });
+    };
+    
+    module.exports = {findAll, insertOne, findOne, updateOne, deleteOne};

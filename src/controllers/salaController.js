@@ -1,6 +1,6 @@
 const salaModel = require('../models/salaModel');
 
-exports.get = async(req, res)=>{
+exports.get = async(_req, _res)=>{
     return await salaModel.listarSalas();
 };
 
@@ -8,15 +8,15 @@ exports.get = async(req, res)=>{
 exports.enviarMensagem = async (nick, msg, idsala) => {
     const sala = await salaModel.buscarSala(idsala);
 
-    if (!sala.msgs) {
-      sala.msg=[];
+    if (!msg) {
+      msg=[];
     }
 
     timestamp=Date.now();
 
-    sala.msg.push(
+    msg.push(
       {
-        timestamp:timestamp,
+        timestamp: "timestamp",
         msg:msg,
         nick:nick
       }
@@ -24,15 +24,15 @@ exports.enviarMensagem = async (nick, msg, idsala) => {
 
     let resp = await salaModel.atualizarMensagens(sala);
 
-    return {"msg":"OK", "timestamp":timestamp};
+    return {"msg":"enviou mensagem!", "timestamp":timestamp};
 };
 
 exports.buscarMensagens = async (idsala, timestamp) => {
     let mensagens = await salaModel.buscarMensagens(idsala, timestamp);
     
     return {
-      "timestamp":mensagens[mensagens.length - 1].timestamp,
-      "msgs":mensagens
+      "timestamp":timestamp,
+      "msg":mensagens
     };
 };
 
@@ -40,14 +40,21 @@ exports.entrar = async (iduser, idsala) => {
   const sala = await salaModel.buscarSala(idsala);
   let usuarioModel = require('../models/usuarioModel');
   let user = await usuarioModel.buscarUsuario(iduser);
-  console.log(sala);
-  console.log(user);
-  user.sala={_id:sala._id, nome:sala.nome, tipo:sala.tipo};
   if (await usuarioModel.alterarUsuario(user)) {
     return {msg:"OK", timestamp:timestamp=Date.now()};
   }
   return false;
 };
+
+exports.sair = async (iduser, idsala) => {
+  const sala = await salaModel.buscarSala(idsala);
+  let usuarioModel=require('../models/usuarioModel');
+  let user= await usuarioModel.buscarUsuario(iduser);
+  await usuarioModel.alterarUsuario(user);
+  if (await usuarioModel.alterarUsuario(user)) {
+      return { msg: "usuário saiu!", timestamp: timestamp = Date.now() };
+  }
+}
 
 
 
